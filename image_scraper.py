@@ -1,5 +1,6 @@
 import re
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 import requests
@@ -7,8 +8,7 @@ from bs4 import BeautifulSoup
 import os  # for creating directories
 
 # 利用selenium套件操作網頁
-driver = webdriver.Chrome(ChromeDriverManager().install())
-
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get('https://pixabay.com/images/search/computer/')
 
 # 滾動網頁捲軸
@@ -19,7 +19,7 @@ for i in range(10):
 # 利用BeautifulSoup套件爬取網頁圖片連結
 soup = BeautifulSoup(driver.page_source, 'lxml')
 
-images = soup.find_all('a', {'class': 'link--h3bPW'})
+images = soup.find_all('div', {'class': 'row-masonry-cell-inner'})
 
 image_links = [image.find('img').get('src') if '.gif' not in image.find(
     'img').get('src') else image.find('img').get('data-lazy') for image in images]
@@ -32,5 +32,5 @@ for index, link in enumerate(image_links):
 
     img = requests.get(link)
 
-    with open(f'image/{index+1}.jpg', 'wb') as file:
+    with open(f'image\\{index+1}.jpg', 'wb') as file:
         file.write(img.content)
