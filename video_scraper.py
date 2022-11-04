@@ -31,7 +31,7 @@ for index, url in enumerate(ts_url_list):
         file.write(ts_response.content)
 
 # 合併ts檔案
-ts_files = glob.glob('video/*.ts')
+ts_files = sorted(glob.glob('video/*.ts'), key=os.path.getmtime)
 
 with open('video/trailer.mp4', 'wb') as file:
     for ts_file in ts_files:
