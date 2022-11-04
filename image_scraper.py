@@ -32,5 +32,5 @@ for index, link in enumerate(image_links):
 
     img = requests.get(link)
 
-    with open(f'image\\{index+1}.jpg', 'wb') as file:
+    with open(f'image/{index+1}.jpg', 'wb') as file:
         file.write(img.content)
