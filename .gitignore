@@ -131,3 +131,7 @@ dmypy.json
 image/
 
 video/
+
+csv/
+
+zip/
